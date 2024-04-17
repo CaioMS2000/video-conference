@@ -1,4 +1,5 @@
 import { PropsWithChildren, HTMLProps } from "react";
+import { StreamVideoProvider } from "../../../providers/StreamClientProvider";
 
 interface RootLayoutProps extends PropsWithChildren, HTMLProps<HTMLElement> {}
 
@@ -8,7 +9,9 @@ export default async function RootLayout({
 }: RootLayoutProps) {
 	return (
 		<>
-			<main>{children}</main>
+			<StreamVideoProvider>
+				<main>{children}</main>
+			</StreamVideoProvider>
 		</>
 	);
 }
