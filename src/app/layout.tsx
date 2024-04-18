@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
+import { UserProvider } from "@/context/user";
 import "./globals.css";
+import "@stream-io/video-react-sdk/dist/css/styles.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +20,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`${inter.className} bg-dark-2`}>
-				{children}
+				<UserProvider>{children}</UserProvider>
 				<Toaster />
 			</body>
 		</html>

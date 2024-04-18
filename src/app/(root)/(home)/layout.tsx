@@ -8,6 +8,7 @@ export default async function HomeLayout({
 	children,
 	...rest
 }: HomeLayoutProps) {
+
 	return (
 		<main className="relative">
             <Navbar/>
