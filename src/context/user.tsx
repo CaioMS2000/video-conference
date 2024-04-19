@@ -8,9 +8,11 @@ import {
 	useEffect,
 	useState,
 } from "react";
+import { getCookie } from "../../actions/cookies.actions";
 
 interface UserType {
 	id: string;
+	username?: string;
 }
 
 interface UserContextType {
@@ -27,9 +29,19 @@ interface UserProviderType {
 export function UserProvider({ children }: UserProviderType) {
 	const [user, setUser] = useState<UserType | undefined>(undefined);
 
-	// useEffect(() => {
-	// 	console.log("user", user);
-	// }, []);
+	async function buildUser() {
+		const someCookie = await getCookie("stream-client-id");
+
+		if (!someCookie || !someCookie.value) throw new Error("User not found");
+
+		const parsedUser = JSON.parse(someCookie.value);
+
+		setUser({ id: parsedUser.id, username: `username-for-${parsedUser.id}` });
+	}
+
+	useEffect(() => {
+		if(!user || !user.id) buildUser();
+	}, [user]);
 
 	return (
 		<userContext.Provider

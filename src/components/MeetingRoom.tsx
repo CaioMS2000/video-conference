@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LayoutList, User } from "lucide-react";
 import { Button } from "./ui/button";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import EndCallButton from "./EndCallButton";
 import Loader from "./Loader";
 
@@ -29,6 +29,7 @@ interface MeetingRoomProps extends PropsWithChildren, HTMLProps<HTMLElement> {}
 
 export default function MeetingRoom({ ...rest }: MeetingRoomProps) {
 	const searchParams = useSearchParams();
+	const {push} = useRouter()
 	const isPersonalRoom = !!searchParams.get("personal");
 	const layoutOptions = ["Grid", "Speaker-Left", "Speaker-Right"];
 	const [layout, setLayout] = useState<CallLayoutType>("speaker-left");
@@ -69,7 +70,7 @@ export default function MeetingRoom({ ...rest }: MeetingRoomProps) {
 			</div>
 
 			<div className="fixed bottom-0 flex w-full items-center justify-center gap-5 flex-wrap">
-				<CallControls />
+				<CallControls onLeave={() => push('/')} />
 
 				<DropdownMenu>
 					<div className="flex items-center">
